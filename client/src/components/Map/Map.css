@@ -1,0 +1,161 @@
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.map-button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border-radius: 5px;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.save-button {
+  background-color: green;
+}
+
+.cancel-button {
+  background-color: red;
+}
+
+/* Map Controls */
+.map-controls {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1000;
+  background-color: white;
+  padding: 12px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.map-controls button {
+  width: 100%;
+  padding: 8px;
+  border: none;
+  border-radius: 5px;
+  background-color: #e3f2fd;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s;
+  font-size: 14px;
+}
+
+.map-controls button:hover {
+  background-color: #bbdefb;
+}
+
+.map-controls button.active {
+  background-color: #90caf9;
+  font-weight: 500;
+}
+
+.map-controls button img {
+  width: 35px;
+  height: 35px;
+}
+
+/* Reset Leaflet Popup default styles */
+.leaflet-popup-content {
+  margin: 0;
+}
+
+.form-container {
+  min-width: 220px;
+  max-width: 100%;
+  padding: 10px;
+}
+
+.form-warning {
+  color: orange;
+  margin: 0 0 15px 0;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.form-input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.form-textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+  min-height: 60px;
+  box-sizing: border-box;
+}
+
+.form-file-input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.form-file-input::-webkit-file-upload-button {
+  padding: 8px 16px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #e0e0e0;
+  cursor: pointer;
+}
+
+.image-preview {
+  margin-top: 10px;
+  width: 100%;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Responsive styles */
+@media screen and (max-width: 480px) {
+  .form-container {
+    min-width: 180px;
+    padding: 0 5px;
+  }
+
+  .form-textarea {
+    min-height: 40px;
+  }
+
+  .map-button {
+    padding: 6px 12px;
+  }
+
+  .form-input,
+  .form-textarea,
+  .form-file-input {
+    padding: 6px;
+  }
+} 
