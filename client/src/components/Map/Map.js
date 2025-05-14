@@ -8,6 +8,7 @@ import {
 } from 'react-leaflet';
 import L from 'leaflet';
 import './Map.css';
+import { fetchMarkers, postMarker } from '../../api';
 
 const tileLayers = {
   streets: {
@@ -37,7 +38,10 @@ const markerIcon = new L.Icon({
 });
 
 export default function Map() {
-  const [markers, setMarkers] = useState([]);
+const [markers, setMarkers] = useState([]);
+useEffect(() => {
+fetchMarkers().then(setMarkers).catch(console.error);
+}, []);
   const [adding, setAdding] = useState(false);
   const [tempMarkerPos, setTempMarkerPos] = useState(null);
   const [currentLayer, setCurrentLayer] = useState('satellite');
@@ -95,40 +99,36 @@ export default function Map() {
   };
 
   const handleSave = async () => {
-    if (!tempData.title) {
-      alert('Please enter a title.');
-      return;
-    }
-
-    try {
-      const formData = new FormData();
-      formData.append('title', tempData.title);
-      formData.append('description', tempData.description);
-      formData.append('lat', tempMarkerPos[0]);
-      formData.append('lng', tempMarkerPos[1]);
-      if (tempData.image) {
-        formData.append('image', tempData.image);
-      }
-
-      const response = await fetch('http://localhost:5000/api/markers', {
-        method: 'POST',
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to save marker');
-      }
-
-      const newMarker = await response.json();
-      setMarkers([...markers, newMarker]);
-      setAdding(false);
-      setTempMarkerPos(null);
-      setTempData({ title: '', description: '', image: null });
-    } catch (error) {
-      console.error('Error saving marker:', error);
-      alert('Failed to save marker. Please try again.');
-    }
-  };
+       if (!tempData.title) {
+         alert('Please enter a title.');
+         return;
+       }
+       try {
+         const saved = await postMarker({
+           title:       tempData.title,
+           description: tempData.description,
+           lat:         tempMarkerPos[0],
+           lng:         tempMarkerPos[1],
+           imageFile:   tempData.image
+         });
+         // `saved` has keys: id, title, description, lat, lng, image_url, etc.
+         setMarkers([
+           ...markers,
+           {
+             position: [saved.lat, saved.lng],
+             title:    saved.title,
+             description: saved.description,
+             image:    saved.image_url
+           }
+         ]);
+         setAdding(false);
+         setTempMarkerPos(null);
+         setTempData({ title: '', description: '', image: null });
+       } catch (err) {
+         console.error(err);
+         alert('Error saving spot');
+       }
+     };
 
   const handleCancel = () => {
     setAdding(false);
